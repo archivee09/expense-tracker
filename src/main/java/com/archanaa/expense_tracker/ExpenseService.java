@@ -1,5 +1,6 @@
 package com.archanaa.expense_tracker;
 
+import com.archanaa.expense_tracker.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,9 @@ public class ExpenseService{
     }
 
     public void deleteExpense(Long id){
-
+        if (!expenseRepository.existsById(id)){
+            throw new ResourceNotFoundException("Expense not found with ID " + id);
+        }
         expenseRepository.deleteById(id);
     }
 
@@ -32,6 +35,9 @@ public class ExpenseService{
             if(expense.getCategory().equals(category)){
                 total+=expense.getAmount();
             }
+        }
+        if(total==0){
+            throw new ResourceNotFoundException("No expenses found for category " +category);
         }
         return total;
     }
