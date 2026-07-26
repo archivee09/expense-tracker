@@ -12,15 +12,18 @@ public class ExpenseService{
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    // Retrieves all expenses from the database
     public List<Expense> getAllExpenses(){
         return expenseRepository.findAll();
     }
 
+    // Saves a new expense to the database
     public Expense addExpense(Expense expense){
 
         return expenseRepository.save(expense);
     }
 
+    // Deletes expense by ID, throws exception if not found
     public void deleteExpense(Long id){
         if (!expenseRepository.existsById(id)){
             throw new ResourceNotFoundException("Expense not found with ID " + id);
@@ -28,6 +31,7 @@ public class ExpenseService{
         expenseRepository.deleteById(id);
     }
 
+    // Calculates total spending for a given category
     public double getTotalByCategory(String category){
         List<Expense> all=expenseRepository.findAll();
         double total=0;
