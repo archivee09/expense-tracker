@@ -1,6 +1,9 @@
 package com.archanaa.expense_tracker;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name="expenses")
@@ -9,14 +12,20 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double amount;
+
+    @NotNull(message = "Amount is required")
+    @Positive(message = "Amount must be positive")
+    private Double amount;
+
+    @NotBlank(message = "Category is required")
     private String category;
+
     private String description;
     private String date;
 
     public Expense() {}
 
-    public Expense(Long id, double amount, String category, String description, String date) {
+    public Expense(Long id, Double amount, String category, String description, String date) {
         this.id = id;
         this.amount = amount;
         this.category = category;
@@ -32,11 +41,11 @@ public class Expense {
         this.id = id;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -63,4 +72,5 @@ public class Expense {
     public void setDate(String date) {
         this.date = date;
     }
+
 }

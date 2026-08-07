@@ -1,6 +1,5 @@
 package com.archanaa.expense_tracker;
-
-import com.archanaa.expense_tracker.Expense;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public Expense addExpense(@RequestBody Expense expense) {
+    public Expense addExpense(@Valid @RequestBody Expense expense) {
         return expenseService.addExpense(expense);
     }
 
@@ -33,6 +32,7 @@ public class ExpenseController {
     public double getTotalByCategory(@PathVariable String category) {
         return expenseService.getTotalByCategory(category);
     }
+
 }
 
 
